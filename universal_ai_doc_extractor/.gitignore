@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+logs/
+*.db
+*.tmp.*
+build/dist/
+build/build/
+*.spec
+__pycache__
+/root/.ai_doc_extractor/
