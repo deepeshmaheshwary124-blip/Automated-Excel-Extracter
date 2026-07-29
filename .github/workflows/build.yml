@@ -8,6 +8,10 @@ on:
     branches: [main, master]
   workflow_dispatch:
 
+defaults:
+  run:
+    working-directory: universal_ai_doc_extractor
+
 jobs:
   build:
     runs-on: windows-latest
@@ -73,12 +77,12 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Universal-AI-Document-Extractor
-          path: dist/Universal AI Document Extractor.exe
+          path: universal_ai_doc_extractor/dist/Universal AI Document Extractor.exe
           if-no-files-found: error
 
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/Universal AI Document Extractor.exe
+          files: universal_ai_doc_extractor/dist/Universal AI Document Extractor.exe
           generate_release_notes: true
