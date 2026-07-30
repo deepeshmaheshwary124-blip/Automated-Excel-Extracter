@@ -51,6 +51,7 @@ jobs:
             --noconfirm ^
             --clean ^
             --strip ^
+            --upx-dir "C:\ProgramData\chocolatey\bin" ^
             --hidden-import "PySide6.QtCore" ^
             --hidden-import "PySide6.QtWidgets" ^
             --hidden-import "PySide6.QtGui" ^
