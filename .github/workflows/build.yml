@@ -46,24 +46,41 @@ jobs:
             --windowed ^
             --noconfirm ^
             --clean ^
+            --collect-all "PySide6" ^
+            --collect-all "requests" ^
+            --collect-all "cryptography" ^
+            --collect-all "PIL" ^
+            --collect-all "openpyxl" ^
+            --collect-all "matplotlib" ^
             --hidden-import "PySide6.QtCore" ^
             --hidden-import "PySide6.QtWidgets" ^
             --hidden-import "PySide6.QtGui" ^
             --hidden-import "pytesseract" ^
             --hidden-import "easyocr" ^
+            --hidden-import "ocrmypdf" ^
             --hidden-import "openpyxl" ^
             --hidden-import "pandas" ^
             --hidden-import "PIL" ^
             --hidden-import "PIL.Image" ^
+            --hidden-import "PIL.ImageDraw" ^
+            --hidden-import "PIL.ImageFont" ^
             --hidden-import "cryptography" ^
             --hidden-import "cryptography.fernet" ^
+            --hidden-import "cryptography.hazmat.primitives" ^
+            --hidden-import "cryptography.hazmat.primitives.ciphers" ^
+            --hidden-import "cryptography.hazmat.primitives.kdf" ^
             --hidden-import "pypdf2" ^
             --hidden-import "pypdfium2" ^
             --hidden-import "matplotlib" ^
             --hidden-import "matplotlib.backends.backend_qtagg" ^
             --hidden-import "requests" ^
+            --hidden-import "urllib3" ^
+            --hidden-import "charset_normalizer" ^
+            --hidden-import "certifi" ^
+            --hidden-import "idna" ^
             --hidden-import "pydantic" ^
-            --collect-all "PySide6" ^
+            --hidden-import "Levenshtein" ^
+            --hidden-import "dotenv" ^
             main.py
         shell: cmd
 
