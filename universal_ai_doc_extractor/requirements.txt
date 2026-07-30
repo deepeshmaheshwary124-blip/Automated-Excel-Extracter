@@ -1,17 +1,47 @@
+# Core UI
 PySide6>=6.6.0
+
+# Excel / spreadsheet
 openpyxl>=3.1.2
 pandas>=2.1.0
+
+# Image processing
 Pillow>=10.0.0
+
+# OCR engines
 pytesseract>=0.3.10
 easyocr>=1.7.0
-ocrmypdf>=15.0.0
-pypdf2>=3.0.0
+# NOTE: ocrmypdf requires Ghostscript (system package) and is not directly
+# invoked by the Python code (OCRService falls back to Tesseract for unknown
+# engines).  It has been removed to keep the build lean and portable.
+
+# PDF handling
+PyPDF2>=3.0.0
 pypdfium2>=4.0.0
+
+# Document formats
+python-docx>=1.1.0
+
+# Security / encryption
 cryptography>=41.0.0
+
+# Configuration
 python-dotenv>=1.0.0
+
+# Plotting / charts
 matplotlib>=3.8.0
+
+# String similarity
 python-Levenshtein>=0.23.0
+
+# HTTP / networking
 requests>=2.31.0
+
+# Data validation
 pydantic>=2.5.0
+
+# Testing (dev only)
 pytest>=8.0.0
+
+# Packaging
 pyinstaller>=6.0.0

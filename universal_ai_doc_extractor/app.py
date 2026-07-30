@@ -5,7 +5,6 @@ import sys
 from pathlib import Path
 from typing import Optional
 
-from PySide6.QtCore import Qt, QCoreApplication
 from PySide6.QtWidgets import QApplication
 
 from config.constants import APP_NAME, APP_VERSION, ensure_dirs
@@ -41,9 +40,9 @@ class Application:
         db.initialize()
         run_migrations()
 
-        QCoreApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
-        QCoreApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
-
+        # Qt.AA_EnableHighDpiScaling and Qt.AA_UseHighDpiPixmaps were removed in
+        # Qt 6 — high-DPI support is on by default and these attributes no longer
+        # exist.  Setting them causes an AttributeError with PySide6.
         self.app = QApplication(sys.argv)
         self.app.setApplicationName(APP_NAME)
         self.app.setApplicationVersion(APP_VERSION)

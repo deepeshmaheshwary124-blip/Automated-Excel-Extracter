@@ -1,55 +1,49 @@
-#!/bin/bash
-"""
-Build script for Universal AI Document Extractor.
-Packages the application using PyInstaller.
-"""
+#!/usr/bin/env bash
+# Build script for Universal AI Document Extractor.
+# Packages the application into a single-file Windows .exe using PyInstaller.
+#
+# Usage (from the project root):
+#   cd universal_ai_doc_extractor && bash build/build.sh
+#
+# For the authoritative Windows .exe, use the GitHub Actions workflow
+# (.github/workflows/build.yml) which runs on windows-latest.
 
-set -e
+set -euo pipefail
 
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-BUILD_DIR="$PROJECT_DIR/build"
-DIST_DIR="$BUILD_DIR/dist"
+SPEC_FILE="$PROJECT_DIR/universal_ai_doc_extractor.spec"
+DIST_DIR="$PROJECT_DIR/dist"
+BUILD_WORK_DIR="$PROJECT_DIR/build/_work"
 
 echo "=== Building Universal AI Document Extractor ==="
-echo "Project dir: $PROJECT_DIR"
+echo "Project dir : $PROJECT_DIR"
+echo "Spec file   : $SPEC_FILE"
 
 cd "$PROJECT_DIR"
 
-echo "Installing dependencies..."
-pip install --break-system-packages -r requirements.txt 2>&1 | tail -5
+# ── Install / update dependencies ──────────────────────────────────────────
+echo ""
+echo "[1/4] Installing Python dependencies..."
+pip install --break-system-packages -r requirements.txt 2>&1 | tail -10
 
-echo "Cleaning old builds..."
-rm -rf "$BUILD_DIR/dist" "$BUILD_DIR/build" "$PROJECT_DIR/*.spec"
+# ── Clean previous build artefacts ─────────────────────────────────────────
+echo ""
+echo "[2/4] Cleaning old build artefacts..."
+rm -rf "$DIST_DIR" "$BUILD_WORK_DIR"
 
-echo "Running PyInstaller..."
+# ── Run PyInstaller ─────────────────────────────────────────────────────────
+echo ""
+echo "[3/4] Running PyInstaller (this may take several minutes)..."
 pyinstaller \
-    --name "Universal AI Document Extractor" \
-    --onefile \
-    --windowed \
     --noconfirm \
     --clean \
-    --add-data "assets:assets" \
-    --hidden-import "PySide6.QtCore" \
-    --hidden-import "PySide6.QtWidgets" \
-    --hidden-import "PySide6.QtGui" \
-    --hidden-import "pytesseract" \
-    --hidden-import "easyocr" \
-    --hidden-import "openpyxl" \
-    --hidden-import "pandas" \
-    --hidden-import "PIL" \
-    --hidden-import "PIL.Image" \
-    --hidden-import "cryptography" \
-    --hidden-import "cryptography.fernet" \
-    --hidden-import "pypdf2" \
-    --hidden-import "pypdfium2" \
-    --hidden-import "matplotlib" \
-    --hidden-import "matplotlib.backends.backend_qtagg" \
-    --hidden-import "requests" \
-    --hidden-import "pydantic" \
-    --collect-all "PySide6" \
-    main.py
+    --distpath "$DIST_DIR" \
+    --workpath "$BUILD_WORK_DIR" \
+    "$SPEC_FILE"
 
+# ── Report ──────────────────────────────────────────────────────────────────
 echo ""
-echo "=== Build Complete ==="
-echo "Output: $DIST_DIR/Universal AI Document Extractor.exe"
-ls -lh "$DIST_DIR/" 2>/dev/null || ls -lh "$PROJECT_DIR/dist/"
+echo "[4/4] Build complete."
+echo ""
+echo "Output directory: $DIST_DIR"
+ls -lh "$DIST_DIR/" 2>/dev/null || echo "(no files found — check build output above)"
