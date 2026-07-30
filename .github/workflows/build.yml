@@ -46,7 +46,7 @@ jobs:
         run: |
           pyinstaller ^
             --name "Universal AI Document Extractor" ^
-            --onedir ^
+            --onefile ^
             --windowed ^
             --noconfirm ^
             --clean ^
@@ -88,21 +88,16 @@ jobs:
         shell: cmd
         continue-on-error: true
 
-      - name: Create distributable zip
-        run: |
-          Compress-Archive -Path "dist\Universal AI Document Extractor\*" -DestinationPath "dist\Universal-AI-Document-Extractor.zip" -Force
-        shell: powershell
-
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: Universal-AI-Document-Extractor
-          path: universal_ai_doc_extractor/dist/Universal-AI-Document-Extractor.zip
+          path: universal_ai_doc_extractor/dist/Universal AI Document Extractor.exe
           if-no-files-found: error
 
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: universal_ai_doc_extractor/dist/Universal-AI-Document-Extractor.zip
+          files: universal_ai_doc_extractor/dist/Universal AI Document Extractor.exe
           generate_release_notes: true
